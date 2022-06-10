@@ -1,0 +1,24 @@
+# Author: Ricardo Miguel Llontop Garcia
+# Public domain
+
+# Create a file inside a path of non-existent directories (.bashrc)
+function create() {
+    arg=$1
+    num_of_dirs=$(grep -o "/" <<< $args | wc -l)
+    make_dirs=$(echo $arg | cut -d / -f1-$num_of_dirs)
+    mkdir -p $make_dirs && touch $arg
+}
+
+# create what/is/it  # will create dirs 'what' and 'is', with file 'it' inside 'is'
+
+
+# Other ways to achieve this, the file contains lines of directories and files like we want to create
+#deeply/nested/foo/bar.txt
+#deeply/nested/baz/fiz.txt
+#we then run a shell command that uses the && combinator to group 3 commands that run sequentially -
+#the first command stores the file in an environment variable (that gets re-used on the next file pass) using the placeholder we registered before
+#1
+$ cat files.txt | xargs -I {} sh -c 'f="{}" && mkdir -p -- "${f%/*}" && touch -- "$f"'
+#2
+$ while read f; do mkdir -p "$(dirname "$f")"; touch "$f"; done < files.txt
+

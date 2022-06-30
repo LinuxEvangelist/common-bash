@@ -1,5 +1,11 @@
-#
+# Azure Cli
 az login
 az account show
 az account list --query "[?user.name=='<email>'].{Name:name, ID:id, Default:isDefault}" --output Table
 az account set --subscription "<subscription>"
+
+
+# Azure Service Principal
+az login
+export MSYS_NO_PATHCONV=1
+az ad sp create-for-rbac --name <SERVICE_PRINCIPAL_NAME> --role Contributor

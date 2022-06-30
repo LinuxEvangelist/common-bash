@@ -1,0 +1,5 @@
+#
+az login
+az account show
+az account list --query "[?user.name=='<email>'].{Name:name, ID:id, Default:isDefault}" --output Table
+az account set --subscription "<subscription>"
